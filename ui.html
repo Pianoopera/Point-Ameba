@@ -1,0 +1,28 @@
+<p>Total Points</p>
+<div id="extractedNumbers"></div>
+<button id="extractBtn">Extract</button>
+
+<script>
+  "use strict";
+
+  parent.postMessage({ pluginMessage: { type: 'extract-numbers' } }, '*');
+
+  // Figmaのプラグインコードからメッセージを受信するためのイベントリスナーを設定
+  onmessage = event => {
+    const { totalPoints } = event.data.pluginMessage;
+    // 抽出された数値をUIに表示
+    const container = document.getElementById('extractedNumbers');
+    container.innerHTML = ''; // コンテナをクリア
+    const elem = document.createElement('p');
+    elem.textContent = totalPoints;
+    container.appendChild(elem);
+  };
+
+
+  // ボタンクリック時のイベントリスナーを設定
+  document.getElementById('extractBtn').addEventListener('click', () => {
+    // Figmaのプラグインコードにメッセージを送信し、数値の抽出を開始
+    parent.postMessage({ pluginMessage: { type: 'extract-numbers' } }, '*');
+  });
+
+</script>
