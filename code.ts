@@ -20,6 +20,9 @@ function extractTextFromSelectedStickyNotes() {
   // 抽出したテキストを格納する配列
   const extractedTexts: string[] = [];
 
+  // 色ごとの合計ポイントを格納するオブジェクト
+  const totalsByColorList: { [color: string]: number } = {};
+
   // 選択されたノードをループして処理
   selectedNodes.forEach((node) => {
     // ノードがSticky Noteかどうかをチェック
@@ -27,6 +30,13 @@ function extractTextFromSelectedStickyNotes() {
 
       // テキストノードを取得
       const textNode = node.text;
+      // 背景色を取得
+      const backgroundColor: any = node.fills;
+      console.log('backgroundColor', backgroundColor);
+      console.log('backgroundColor', backgroundColor[0].color.b);
+
+      const colorKey = `rgb(${Math.round(backgroundColor[0].color.r * 255)}, ${Math.round(backgroundColor[0].color.g * 255)}, ${Math.round(backgroundColor[0].color.b * 255)})`;
+
 
       // テキストノードが存在するかチェック
       if (textNode) {
@@ -41,6 +51,11 @@ function extractTextFromSelectedStickyNotes() {
             // 条件に合致するテキストを配列に追加
             if (number) {
               extractedTexts.push(number[0]);
+
+              if (!totalsByColorList[colorKey]) {
+                totalsByColorList[colorKey] = 0;
+              }
+              totalsByColorList[colorKey] += Number(number[0]);
             }
           }
         }
@@ -50,11 +65,12 @@ function extractTextFromSelectedStickyNotes() {
 
   // 抽出したテキストをコンソールに出力（または後続の処理で利用）
   console.log(extractedTexts);
+  console.log(totalsByColorList);
 
   // 抽出したポイントを合算する
   const totalPoints = extractedTexts.reduce((acc, cur) => acc + Number(cur), 0);
   console.log('totalPoints', totalPoints);
 
   // FigmaのUIに結果を表示（必要に応じて）
-  figma.ui.postMessage({ query: 'totalPoints', totalPoints });
+  figma.ui.postMessage({ totalPoints, totalsByColorList });
 }

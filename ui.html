@@ -1,6 +1,34 @@
-<p>Total Points</p>
 <div id="extractedNumbers"></div>
-<button id="extractBtn">Extract</button>
+<button id="extractBtn" class="extract">Extract</button>
+
+<style>
+  #extractedNumbers {
+    margin-top: 20px;
+  }
+
+  .extract {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1e88e5;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .extract:hover {
+    background-color: #1565c0;
+  }
+
+  .extract:active {
+    background-color: #0d47a1;
+  }
+
+  .extract:focus {
+    outline: none;
+  }
+</style>
 
 <script>
   "use strict";
@@ -9,13 +37,39 @@
 
   // Figmaのプラグインコードからメッセージを受信するためのイベントリスナーを設定
   onmessage = event => {
-    const { totalPoints } = event.data.pluginMessage;
+    const { totalPoints, totalsByColorList } = event.data.pluginMessage;
     // 抽出された数値をUIに表示
     const container = document.getElementById('extractedNumbers');
     container.innerHTML = ''; // コンテナをクリア
     const elem = document.createElement('p');
-    elem.textContent = totalPoints;
+    elem.textContent = 'Total: ' + totalPoints + 'pts';
     container.appendChild(elem);
+
+    // 各色の合計ポイントをUIに表示
+    const totalsByColorArray = Object.keys(totalsByColorList);
+    totalsByColorArray.forEach((key, value) => {
+      const divElem = document.createElement('div');
+      divElem.style.display = 'flex';
+      divElem.style.alignItems = 'center';
+      divElem.style.gap = '5px';
+      const colorElem = document.createElement('p');
+      colorElem.style.backgroundColor = key;
+      colorElem.style.width = '20px';
+      colorElem.style.height = '20px';
+      colorElem.style.margin = 'inherit';
+      const childElem = document.createElement('p');
+      childElem.textContent = totalsByColorList[key] + 'pts';
+      childElem.style.margin = 'inherit';
+      container.appendChild(divElem);
+      divElem.appendChild(colorElem);
+      divElem.appendChild(childElem);
+    });
+
+    // Object.keys(totalsByColorList).forEach(list => {
+    //   const colorElem = document.createElement('p');
+    //   colorElem.textContent = 'Total: ' + list;
+    //   container.appendChild(colorElem);
+    // });
   };
 
 
