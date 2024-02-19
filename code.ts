@@ -1,12 +1,5 @@
 
-/** 名前候補
-"AgilePoint Totalizer"
-"StorySum Pro"
-"PointTally Master"
-"StoryPoint Tally" ★★★
-"SprintScore Aggregator"
-"EpicPoint Totalizer"
-*/
+/** 名前候補：StoryPoint Tally */
 
 figma.showUI(__html__);
 
