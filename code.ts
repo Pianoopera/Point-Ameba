@@ -4,7 +4,7 @@ figma.showUI(__html__);
 let timer: any = undefined;
 
 figma.ui.onmessage = message => {
-  console.log('message', message);
+  // console.log('message', message);
   // プラグインの実行時に上記の関数を呼び出す
   extractTextFromSelectedStickyNotes();
   if (message.quit) {
@@ -32,8 +32,8 @@ function extractTextFromSelectedStickyNotes() {
       const textNode = node.text;
       // 背景色を取得
       const backgroundColor: any = node.fills;
-      console.log('backgroundColor', backgroundColor);
-      console.log('backgroundColor', backgroundColor[0].color.b);
+      // console.log('backgroundColor', backgroundColor);
+      // console.log('backgroundColor', backgroundColor[0].color.b);
 
       const colorKey = `rgb(${Math.round(backgroundColor[0].color.r * 255)}, ${Math.round(backgroundColor[0].color.g * 255)}, ${Math.round(backgroundColor[0].color.b * 255)})`;
 
@@ -45,16 +45,20 @@ function extractTextFromSelectedStickyNotes() {
         let match;
         while ((match = regex.exec(textNode.characters)) !== null) {
           // 抽出したテキストに数値が含まれているかチェック
-          if (/\d+/.test(match[1])) {
+          // & 小数点も考慮する
+          if (/\d+(.\d+)?/.test(match[1])) {
             // 数値のみ抽出
-            const number = match[1].match(/\d+/);
+            const number = match[1].match(/\d+(.\d+)?/);
             // 条件に合致するテキストを配列に追加
             if (number) {
+              // console.log('number', number);
+              
               extractedTexts.push(number[0]);
 
               if (!totalsByColorList[colorKey]) {
                 totalsByColorList[colorKey] = 0;
               }
+              // 端数対応
               totalsByColorList[colorKey] += Number(number[0]);
             }
           }
@@ -64,12 +68,12 @@ function extractTextFromSelectedStickyNotes() {
   });
 
   // 抽出したテキストをコンソールに出力（または後続の処理で利用）
-  console.log(extractedTexts);
-  console.log(totalsByColorList);
+  // console.log(extractedTexts);
+  // console.log(totalsByColorList);
 
   // 抽出したポイントを合算する
   const totalPoints = extractedTexts.reduce((acc, cur) => acc + Number(cur), 0);
-  console.log('totalPoints', totalPoints);
+  // console.log('totalPoints', totalPoints);
 
   // FigmaのUIに結果を表示（必要に応じて）
   figma.ui.postMessage({ totalPoints, totalsByColorList });
