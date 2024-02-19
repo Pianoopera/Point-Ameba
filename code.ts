@@ -1,4 +1,13 @@
 
+/** 名前候補
+"AgilePoint Totalizer"
+"StorySum Pro"
+"PointTally Master"
+"StoryPoint Tally" ★★★
+"SprintScore Aggregator"
+"EpicPoint Totalizer"
+*/
+
 figma.showUI(__html__);
 
 let timer: any = undefined;
