@@ -42,7 +42,8 @@
     const container = document.getElementById('storyPointTally');
     container.innerHTML = ''; // コンテナをクリア
     const elem = document.createElement('p');
-    elem.textContent = 'Total: ' + totalPoints + 'pts';
+    elem.textContent = 'Total：' + totalPoints + 'pt';
+    elem.style.fontWeight = 'bold';
     container.appendChild(elem);
 
     // 各色の合計ポイントをUIに表示
@@ -61,7 +62,7 @@
       colorElem.style.margin = 'inherit';
       // color tally child box
       const childElem = document.createElement('p');
-      childElem.textContent = totalsByColorList[key] + 'pts';
+      childElem.textContent = totalsByColorList[key] + 'pt';
       childElem.style.margin = 'inherit';
       // append
       container.appendChild(divElem);

@@ -1,5 +1,5 @@
 
-/** 名前候補：StoryPoint Tally */
+/** Name：Point Amoeba */
 
 figma.showUI(__html__);
 
@@ -46,6 +46,10 @@ function extractTextFromSelectedStickyNotes() {
         const regex = /\[(.*?)\]/g;
         let match;
         while ((match = regex.exec(textNode.characters)) !== null) {
+          // 全角の数字を半角に変換
+          match[1] = match[1].replace(/[０-９]/g, function (s) {
+            return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+          });
           // 抽出したテキストに数値が含まれているかチェック
           // & 小数点も考慮する
           if (/\d+(.\d+)?/.test(match[1])) {
@@ -54,7 +58,6 @@ function extractTextFromSelectedStickyNotes() {
             // 条件に合致するテキストを配列に追加
             if (number) {
               // console.log('number', number);
-              
               extractedTexts.push(number[0]);
 
               if (!totalsByColorList[colorKey]) {
@@ -69,7 +72,6 @@ function extractTextFromSelectedStickyNotes() {
     }
   });
 
-  // 抽出したテキストをコンソールに出力（または後続の処理で利用）
   // console.log(extractedTexts);
   // console.log(totalsByColorList);
 
