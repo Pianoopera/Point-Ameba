@@ -6,7 +6,6 @@ figma.showUI(__html__);
 let timer: any = undefined;
 
 figma.ui.onmessage = message => {
-  // console.log('message', message);
   // プラグインの実行時に上記の関数を呼び出す
   extractTextFromSelectedStickyNotes();
   if (message.quit) {
@@ -34,8 +33,6 @@ function extractTextFromSelectedStickyNotes() {
       const textNode = node.text;
       // 背景色を取得
       const backgroundColor: any = node.fills;
-      // console.log('backgroundColor', backgroundColor);
-      // console.log('backgroundColor', backgroundColor[0].color.b);
 
       const colorKey = `rgb(${Math.round(backgroundColor[0].color.r * 255)}, ${Math.round(backgroundColor[0].color.g * 255)}, ${Math.round(backgroundColor[0].color.b * 255)})`;
 
@@ -57,7 +54,6 @@ function extractTextFromSelectedStickyNotes() {
             const number = match[1].match(/\d+(.\d+)?/);
             // 条件に合致するテキストを配列に追加
             if (number) {
-              // console.log('number', number);
               extractedTexts.push(number[0]);
 
               if (!totalsByColorList[colorKey]) {
@@ -72,12 +68,8 @@ function extractTextFromSelectedStickyNotes() {
     }
   });
 
-  // console.log(extractedTexts);
-  // console.log(totalsByColorList);
-
   // 抽出したポイントを合算する
   const totalPoints = extractedTexts.reduce((acc, cur) => acc + Number(cur), 0);
-  // console.log('totalPoints', totalPoints);
 
   // FigmaのUIに結果を表示（必要に応じて）
   figma.ui.postMessage({ totalPoints, totalsByColorList });
