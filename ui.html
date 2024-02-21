@@ -1,0 +1,81 @@
+<div id="storyPointTally"></div>
+<button id="tallyBtn" class="tally">Tally</button>
+
+<style>
+  #storyPointTally {
+    margin-top: 20px;
+  }
+
+  .tally {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1e88e5;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .tally:hover {
+    background-color: #1565c0;
+  }
+
+  .tally:active {
+    background-color: #0d47a1;
+  }
+
+  .tally:focus {
+    outline: none;
+  }
+</style>
+
+<script>
+  "use strict";
+
+  parent.postMessage({ pluginMessage: { type: 'tally-numbers' } }, '*');
+
+  // Figmaのプラグインコードからメッセージを受信するためのイベントリスナーを設定
+  onmessage = event => {
+    const { totalPoints, totalsByColorList } = event.data.pluginMessage;
+    // 抽出された数値をUIに表示
+    const container = document.getElementById('storyPointTally');
+    container.innerHTML = ''; // コンテナをクリア
+    const elem = document.createElement('p');
+    elem.textContent = 'Total：' + totalPoints + 'pt';
+    elem.style.fontWeight = 'bold';
+    container.appendChild(elem);
+
+    // 各色の合計ポイントをUIに表示
+    const totalsByColorArray = Object.keys(totalsByColorList);
+    totalsByColorArray.forEach((key, value) => {
+      // parents
+      const divElem = document.createElement('div');
+      divElem.style.display = 'flex';
+      divElem.style.alignItems = 'center';
+      divElem.style.gap = '5px';
+      // color child box
+      const colorElem = document.createElement('p');
+      colorElem.style.backgroundColor = key;
+      colorElem.style.width = '20px';
+      colorElem.style.height = '20px';
+      colorElem.style.margin = 'inherit';
+      // color tally child box
+      const childElem = document.createElement('p');
+      childElem.textContent = totalsByColorList[key] + 'pt';
+      childElem.style.margin = 'inherit';
+      // append
+      container.appendChild(divElem);
+      divElem.appendChild(colorElem);
+      divElem.appendChild(childElem);
+    });
+  };
+
+
+  // ボタンクリック時のイベントリスナーを設定
+  document.getElementById('tallyBtn').addEventListener('click', () => {
+    // Figmaのプラグインコードにメッセージを送信し、数値の抽出を開始
+    parent.postMessage({ pluginMessage: { type: 'tally-numbers' } }, '*');
+  });
+
+</script>
