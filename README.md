@@ -1,6 +1,6 @@
 <img width="835" alt="Point Ameba" src="https://github.com/Pianoopera/Point-Ameba/assets/42969626/705e9af9-fd7f-43a7-840c-d54681abdddf">
 
-## Point Ameba
+# Point Ameba
 
 選択した範囲から STICKYの`[]`で記載された数値を抜き出し集計するPluginです。
 
