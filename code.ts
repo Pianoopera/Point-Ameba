@@ -6,40 +6,29 @@ figma.showUI(__html__);
 let timer: any = undefined;
 
 figma.ui.onmessage = message => {
-  // プラグインの実行時に上記の関数を呼び出す
   extractTextFromSelectedStickyNotes();
   if (message.quit) {
     figma.closePlugin();
   }
 }
 
-// 選択されたノードをチェックし、条件に合致するテキストを抽出する関数
 function extractTextFromSelectedStickyNotes() {
-  // 選択されたノードを取得
+
+  /** given */
   const selectedNodes = figma.currentPage.selection;
-
-  // 抽出したテキストを格納する配列
   const extractedTexts: string[] = [];
-
-  // 色ごとの合計ポイントを格納するオブジェクト
   const totalsByColorList: { [color: string]: number } = {};
 
-  // 選択されたノードをループして処理
+  /** when */
   selectedNodes.forEach((node) => {
-    // ノードがSticky Noteかどうかをチェック
+
     if (node.type === 'STICKY') {
 
-      // テキストノードを取得
       const textNode = node.text;
-      // 背景色を取得
       const backgroundColor: any = node.fills;
-
       const colorKey = `rgb(${Math.round(backgroundColor[0].color.r * 255)}, ${Math.round(backgroundColor[0].color.g * 255)}, ${Math.round(backgroundColor[0].color.b * 255)})`;
 
-
-      // テキストノードが存在するかチェック
       if (textNode) {
-        // テキストからカッコ[]で囲まれた部分をすべて抽出
         const regex = /\[(.*?)\]/g;
         let match;
         while ((match = regex.exec(textNode.characters)) !== null) {
@@ -47,8 +36,7 @@ function extractTextFromSelectedStickyNotes() {
           match[1] = match[1].replace(/[０-９]/g, function (s) {
             return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
           });
-          // 抽出したテキストに数値が含まれているかチェック
-          // & 小数点も考慮する
+          // 抽出したテキストに数値が含まれているかチェック & 小数点も考慮する
           if (/\d+(.\d+)?/.test(match[1])) {
             // 数値のみ抽出
             const number = match[1].match(/\d+(.\d+)?/);
@@ -71,6 +59,6 @@ function extractTextFromSelectedStickyNotes() {
   // 抽出したポイントを合算する
   const totalPoints = extractedTexts.reduce((acc, cur) => acc + Number(cur), 0);
 
-  // FigmaのUIに結果を表示（必要に応じて）
+  // FigmaのUIに結果を表示
   figma.ui.postMessage({ totalPoints, totalsByColorList });
 }
