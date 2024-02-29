@@ -36,10 +36,10 @@ The following cases are supported.
 ````
 [2]
 [2pt]
-[spike 2pt]
-[2]
-[2pt] [2pt
-[spike 2pt]
+[spike2pt]
+[２]
+[２pt]
+[spike２pt]
 [0.05]
 ````
 
