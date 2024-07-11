@@ -13,17 +13,14 @@ figma.ui.onmessage = message => {
 }
 
 function extractTextFromSelectedStickyNotes() {
-
   /** given */
   const selectedNodes = figma.currentPage.selection;
   const extractedTexts: string[] = [];
   const totalsByColorList: { [color: string]: number } = {};
 
-  /** when */
-  selectedNodes.forEach((node) => {
-
+  function traverseAndExtract(node: SceneNode) {
+    /** when */
     if (node.type === 'STICKY') {
-
       const textNode = node.text;
       const backgroundColor: any = node.fills;
       const colorKey = `rgb(${Math.round(backgroundColor[0].color.r * 255)}, ${Math.round(backgroundColor[0].color.g * 255)}, ${Math.round(backgroundColor[0].color.b * 255)})`;
@@ -53,12 +50,20 @@ function extractTextFromSelectedStickyNotes() {
           }
         }
       }
+    } else if (node.type === 'SECTION') {
+      node.children.forEach(traverseAndExtract);
     }
-  });
+  }
+
+  // 選択されたノードをループして処理
+  selectedNodes.forEach(traverseAndExtract);
 
   // 抽出したポイントを合算する
   const totalPoints = extractedTexts.reduce((acc, cur) => acc + Number(cur), 0);
 
   // FigmaのUIに結果を表示
   figma.ui.postMessage({ totalPoints, totalsByColorList });
+
+  // reset
+  extractedTexts.length = 0;
 }
