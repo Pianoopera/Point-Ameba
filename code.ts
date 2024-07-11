@@ -50,7 +50,7 @@ function extractTextFromSelectedStickyNotes() {
           }
         }
       }
-    } else if (node.type === 'SECTION') {
+    } else if (node.type === 'SECTION' || node.type === 'GROUP') {
       node.children.forEach(traverseAndExtract);
     }
   }
@@ -63,6 +63,7 @@ function extractTextFromSelectedStickyNotes() {
 
   // FigmaのUIに結果を表示
   figma.ui.postMessage({ totalPoints, totalsByColorList });
+  figma.ui.resize(300, 50 * Object.keys(totalsByColorList).length + 150);
 
   // reset
   extractedTexts.length = 0;
