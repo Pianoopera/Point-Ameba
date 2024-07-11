@@ -2,7 +2,8 @@
 
 # Point Ameba
 
-選択した範囲から STICKYの`[]`で記載された数値を抜き出し集計するPluginです。
+選択した範囲から `STICKY` の`[]`で記載された数値を抜き出し集計するPluginです。
+`SECTION` や `GROUP` 内に配置された `STICKY` の集計も可能です。
 
 [figma plugin](https://www.figma.com/community/plugin/1340871643538820550/point-ameba)
 
@@ -25,6 +26,7 @@
 ---
 
 The numbers described by `[]` in STICKY are extracted from the selection and totaled.
+It is also possible to calculate `STICKY` placed in `SECTION` or `GROUP`.
 
 [figma plugin](https://www.figma.com/community/plugin/1340871643538820550/point-ameba)
 
