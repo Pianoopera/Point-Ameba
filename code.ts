@@ -20,7 +20,12 @@ function extractTextFromSelectedStickyNotes() {
   const totalsByColorList: { [color: string]: number } = {};
 
   /** when */
-  selectedNodes.forEach((node) => {
+  selectedNodes.forEach((node: SceneNode) => {
+
+    console.log(node.type);
+    if (node.type === 'FRAME') {
+      console.log('hogehoge!!!!!!!!!!!');
+    }
 
     if (node.type === 'STICKY') {
 
