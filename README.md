@@ -8,6 +8,10 @@
 
 [figma plugin](https://www.figma.com/community/plugin/1340871643538820550/point-ameba)
 
+インストールしたらクイックアクションで`Point Ameba`と入力すると簡単に呼び出せます。
+
+- Mac: `⌘` + Command + `/` または `⌘` + Command + P
+- Windows: Control + `/` または Control + P
 
 下記ケースに対応しています。
 - 前後の文字列入力へ対応
