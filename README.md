@@ -10,7 +10,7 @@
 
 インストールしたらクイックアクションで`Point Ameba`と入力すると簡単に呼び出せます。
 
-- Mac: `⌘` + Command + `/` または `⌘` + Command + P
+- Mac: `⌘` + `/` または `⌘` + P
 - Windows: Control + `/` または Control + P
 
 下記ケースに対応しています。
