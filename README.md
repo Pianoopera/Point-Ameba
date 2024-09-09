@@ -36,6 +36,11 @@ It is also possible to calculate `STICKY` placed in `SECTION` or `GROUP`.
 
 [figma plugin](https://www.figma.com/community/plugin/1340871643538820550/point-ameba)
 
+Once installed, you can easily call it by typing `Point Ameba` in the Quick Actions
+
+- Mac: ⌘ + / or ⌘ + P
+- Windows: Control + / or Control + P
+
 The following cases are supported.
 - Corresponds to the preceding and following character string input
 - Full-width input
