@@ -20,7 +20,8 @@ function extractTextFromSelectedStickyNotes() {
 
   function traverseAndExtract(node: SceneNode) {
     /** when */
-    if (node.type === 'STICKY') {
+    console.log(node.type);
+    if (node.type === 'STICKY' || node.type === 'SHAPE_WITH_TEXT') {
       const textNode = node.text;
       const backgroundColor: any = node.fills;
       const colorKey = `rgb(${Math.round(backgroundColor[0].color.r * 255)}, ${Math.round(backgroundColor[0].color.g * 255)}, ${Math.round(backgroundColor[0].color.b * 255)})`;

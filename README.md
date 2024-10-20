@@ -2,7 +2,7 @@
 
 # Point Ameba
 
-選択した範囲から `STICKY` の`[]`で記載された数値を抜き出し集計するPluginです。
+選択した範囲から `STICKY` と `SHAPE_WITH_TEXT` の`[]`で記載された数値を抜き出し集計するPluginです。
 
 `SECTION` や `GROUP` 内に配置された `STICKY` の集計も可能です。
 
